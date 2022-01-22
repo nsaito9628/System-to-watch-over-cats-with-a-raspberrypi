@@ -1,0 +1,154 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM Template for Watch-Over-Dashboard deployment
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: WatchOver
+  Topic1:
+    Type: String
+    Default: myroom/motion
+  Topic2:
+    Type: String
+    Default: myroom/dust
+  Metric1:
+    Type: String
+    Default: motion_count
+  Metric2:
+    Type: String
+    Default: dust_count
+  NameTag:
+    Type: String
+    Default: 'WatchOverDashboard'
+
+Resources:
+
+# IAM role to output to Custom Metrics by IoT rule
+  CustomMetricsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "iot.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      RoleName: !Sub ${ProjectName}CustomMetricsRole
+      Policies:
+        - PolicyName: !Sub ${ProjectName}CustomMetricsPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action: "cloudwatch:PutMetricData"
+                Resource: "*"
+
+# IoT topic rules
+  IoTRule1:
+    Type: AWS::IoT::TopicRule
+    Properties:
+      RuleName: !Sub ${ProjectName}IoTRule1
+      TopicRulePayload:
+        Actions:
+          - CloudwatchMetric:
+              MetricName: !Sub ${Metric1}
+              MetricNamespace: !Sub ${Topic1}
+              MetricUnit: None
+              MetricValue: !Join
+                            - ''
+                            - - '${'
+                              - !Sub ${Metric1}
+                              - '}'
+              RoleArn: !GetAtt CustomMetricsRole.Arn
+
+        AwsIotSqlVersion: "2016-03-23"
+        Description: String
+        RuleDisabled: false
+        Sql: !Sub
+          "SELECT * FROM '${Topic1}'"
+      Tags:
+        - Key: Name
+          Value: !Sub ${NameTag}
+  IoTRule2:
+    Type: AWS::IoT::TopicRule
+    Properties:
+      RuleName: !Sub ${ProjectName}IoTRule2
+      TopicRulePayload:
+        Actions:
+          - CloudwatchMetric:
+              MetricName: !Sub ${Metric2}
+              MetricNamespace: !Sub ${Topic2}
+              MetricUnit: None
+              MetricValue: !Join
+                            - ''
+                            - - '${'
+                              - !Sub ${Metric2}
+                              - '}'
+              RoleArn: !GetAtt CustomMetricsRole.Arn
+
+        AwsIotSqlVersion: "2016-03-23"
+        Description: String
+        RuleDisabled: false
+        Sql: !Sub
+          "SELECT * FROM '${Topic2}'"
+      Tags:
+        - Key: Name
+          Value: !Sub ${NameTag}
+
+# CloudWatch Dashboard
+  Dashboard:
+    Type: AWS::CloudWatch::Dashboard
+    Properties:
+      DashboardName: !Sub ${ProjectName}Dashboard
+      DashboardBody: !Sub 
+                      '{
+                        "widgets": [
+                            {
+                                "height": 6,
+                                "width": 12,
+                                "y": 0,
+                                "x": 0,
+                                "type": "metric",
+                                "properties": {
+                                    "metrics": [
+                                        [ 
+                                          "${Topic1}", 
+                                          "${Metric1}" 
+                                        ]
+                                    ],
+                                    "view": "timeSeries",
+                                    "stacked": false,
+                                    "region": "ap-northeast-1",
+                                    "title": "Watch Over Sensor",
+                                    "period": 60,
+                                    "stat": "Sum"
+                                }
+                            },
+                            {
+                                "height": 6,
+                                "width": 12,
+                                "y": 0,
+                                "x": 12,
+                                "type": "metric",
+                                "properties": {
+                                    "metrics": [
+                                        [ 
+                                          "${Topic2}",
+                                          "${Metric2}" 
+                                        ]
+                                    ],
+                                    "view": "timeSeries",
+                                    "stacked": false,
+                                    "region": "ap-northeast-1",
+                                    "title": "Dust Sensor",
+                                    "period": 60,
+                                    "stat": "Sum"
+                                }
+                            }
+                        ]
+                    }'
