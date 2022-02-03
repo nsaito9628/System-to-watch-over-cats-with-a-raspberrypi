@@ -5,7 +5,7 @@ It is a self-made system that watches the daily life of remote families and cats
 ## **What can be done**
 The movement and dustiness (pm2.5 count) of people and pets in the installed room are displayed on the web screen at 10-minute intervals.  
 
-It can be used with the sensor monitor dashboard by deploying "System-to-watch-over-cats-with-a-raspberrypi".  
+It can be used with the camera-system by deploying "Camera-to-watch-over-cats-with-a-raspberrypi".  
 
 When used together, the deployment order is "System-to-watch-over-cats-with-a-raspberrypi"-> "Camera-to-watch-over-cats-with-a-raspberrypi"  
 
