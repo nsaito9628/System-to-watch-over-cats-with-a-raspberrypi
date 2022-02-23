@@ -92,15 +92,24 @@ Download and unpack the required packages
 sudo chmod u+x environment.sh
 ./environment.sh
 ```
-  
+Postfix config chooses local setting and using the default email address.
+<br />
+<img src="img/postfix_config1.PNG">  
+<img src="img/postfix_config2.PNG">
+<br />
+<br>
+<br>
+
 Set aws configuration as default profile  
 ```sh
-aws configure (Replace with your own key)  
-    AWS Access Key ID[]: your Access Key ID
-    AWS Secret Access Key []: your Secret Access Key
-    Default region name []: ap-northeast-1
-    Default output format []:
-```
+aws configure
+```  
+>(Replace with your own key)  
+AWS Access Key ID[]: your Access Key ID  
+AWS Secret Access Key []: your Secret Access Key  
+Default region name []: ap-northeast-1  
+Default output format []:  
+
 
 Customize parameters (if needed)  
 ``` sh
