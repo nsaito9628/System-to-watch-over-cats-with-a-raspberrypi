@@ -123,7 +123,9 @@ sudo chmod u+x iot_prov.sh
 Rewrite to your own parameters(if needed)
 ```sh
 cd ../System-to-watch-over-cats-with-a-raspberrypi/template
-sudo nano tmplate.yaml   
+```
+```sh
+sudo nano tmplate.yaml
 ```
   
 Parameters customizable as below  
