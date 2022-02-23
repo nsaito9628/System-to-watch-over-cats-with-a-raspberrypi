@@ -125,7 +125,7 @@ Rewrite to your own parameters(if needed)
 cd ../System-to-watch-over-cats-with-a-raspberrypi/template
 ```
 ```sh
-sudo nano tmplate.yaml
+sudo nano template.yaml
 ```
   
 Parameters customizable as below  
