@@ -38,18 +38,18 @@ For detection of dust：
 <br>
 
 #### **RaspberryPi**
-Hardware: aarch64
-Model: Raspberry Pi 4 Model B Rev 1.2
+Hardware: BCM2711  
+Model: Raspberry Pi 4 Model B Rev 1.2  
 microSD card: 32GB or more
 <br>
 <br />
 
 ## **Development environment**
 #### **RaspberryPi**
-Kernel: Linux
-Kernel release No.: 5.10.92-v8+
-Kernel version: #1514 SMP PREEMPT Mon Jan 17 17:39:38 GMT 2022 aarch64
-OS： Raspbian GNU/Linux 11 (bullseye)
+Kernel: Linux    
+Kernel release No.: 5.10.92-v7l+   
+Kernel version: #1514 SMP Mon Jan 17 17:38:03 GMT 2022 armv7l  
+OS： Raspbian GNU/Linux 11 (bullseye)  
 Language: python 3.9.2
 #### **Windows**
 Editor: VSCode  
@@ -92,15 +92,24 @@ Download and unpack the required packages
 sudo chmod u+x environment.sh
 ./environment.sh
 ```
-  
+Postfix config chooses local setting and using the default email address.
+<br />
+<img src="img/postfix_config1.PNG">  
+<img src="img/postfix_config2.PNG">
+<br />
+<br>
+<br>
+
 Set aws configuration as default profile  
 ```sh
-aws configure (Replace with your own key)  
-    AWS Access Key ID[]: your Access Key ID
-    AWS Secret Access Key []: your Secret Access Key
-    Default region name []: ap-northeast-1
-    Default output format []:
-```
+aws configure
+```  
+>(Replace with your own key)  
+AWS Access Key ID[]: your Access Key ID  
+AWS Secret Access Key []: your Secret Access Key  
+Default region name []: ap-northeast-1  
+Default output format []:  
+
 
 Customize parameters (if needed)  
 ``` sh
@@ -142,30 +151,30 @@ Deploy CloudFormation stack
 ```sh
 sam build
 sam deploy --guided --capabilities CAPABILITY_NAMED_IAM
-
-    #Enter any stack name and [Y/N]  
+```
+>#Enter any stack name and [Y/N]  
         Stack Name [sam-app]: any-stack-name  
-        AWS Region [ap-northeast-1]: 
-        Parameter ProjectName [WatchOver]: 
-        Parameter Topic1 [myroom/motion]: 
-        Parameter Topic2 [myroom/dust]: 
-        Parameter Metric1 [motion_count]: 
-        Parameter Metric2 [dust_count]: 
-        Parameter NameTag [WatchOverDashboard]: 
-        #Shows you resources changes to be deployed and require a 'Y' to initiate deploy
-        Confirm changes before deploy [Y/n]: Y
-        #SAM needs permission to be able to create roles to connect to the resources in your template
-        Allow SAM CLI IAM role creation [Y/n]: Y
-        #Preserves the state of previously provisioned resources when an operation fails
-        Disable rollback [Y/n]: Y
-        Save arguments to configuration file [Y/n]: Y
+        AWS Region [ap-northeast-1]:  
+        Parameter ProjectName [WatchOver]:  
+        Parameter Topic1 [myroom/motion]:  
+        Parameter Topic2 [myroom/dust]:  
+        Parameter Metric1 [motion_count]:  
+        Parameter Metric2 [dust_count]:  
+        Parameter NameTag [WatchOverDashboard]:  
+        #Shows you resources changes to be deployed and require a 'Y' to initiate deploy  
+        Confirm changes before deploy [Y/n]: Y  
+        #SAM needs permission to be able to create roles to connect to the resources in your template  
+        Allow SAM CLI IAM role creation [Y/n]: Y  
+        #Preserves the state of previously provisioned resources when an operation fails  
+        Disable rollback [Y/n]: Y  
+        Save arguments to configuration file [Y/n]: Y  
         SAM configuration file [samconfig.toml]: 
         SAM configuration environment [default]: 
         ・  
         ・  
         ・  
-        Deploy this changeset? [y/N]: y
-```
+        Deploy this changeset? [y/N]: y  
+
 Confirm message like "Successfully created/updated stack - any-stack-name in ap-northeast-1"  
   
 Restart Raspberry Pi
