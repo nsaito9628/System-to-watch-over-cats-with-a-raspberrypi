@@ -84,7 +84,7 @@ git clone https://github.com/nsaito9628/System-to-watch-over-cats-with-a-raspber
   
 Deploy a project  
 ``` sh
-cp /System-to-watch-over-cats-with-a-raspberrypi/src/* ~
+cp ./System-to-watch-over-cats-with-a-raspberrypi/src/* ~
 ```
 
 Download and unpack the required packages
