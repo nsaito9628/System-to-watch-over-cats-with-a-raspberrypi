@@ -79,7 +79,7 @@ Launch Raspberry Pi that can connect to the Internet.
   
 Clone this project from public repository
 ```sh  
-git clone https://github.com/nsaito9628/Syatem-to-watch-over-cats-with-a-raspberrypi.git
+git clone https://github.com/nsaito9628/System-to-watch-over-cats-with-a-raspberrypi.git
 ```
   
 Deploy a project  
