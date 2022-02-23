@@ -89,7 +89,6 @@ cp -r ./System-to-watch-over-cats-with-a-raspberrypi/src/* ~
 
 Download and unpack the required packages
 ```sh
-cd ..
 sudo chmod u+x environment.sh
 ./environment.sh
 ```
